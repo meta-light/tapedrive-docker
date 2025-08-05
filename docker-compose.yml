@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  tapedrive:
+    build: .
+    container_name: tapedrive-service
+    restart: unless-stopped
+    environment:
+      - ENV=production
+    volumes:
+      # Mount any necessary data directories
+      - ./data:/app/data
+      - ./config:/app/config
+    # ports:
+    #   - "8080:8080"  # Uncomment if tapedrive needs port access
+    networks:
+      - tapedrive-network
+    # Add resource limits if needed
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+
+networks:
+  tapedrive-network:
+    driver: bridge
+
+volumes:
+  tapedrive-data:
